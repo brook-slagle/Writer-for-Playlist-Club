@@ -22,6 +22,9 @@ interface Image {
     width: number;
 }
 
+interface Playlist {
+    name: string;
+}
 
 interface Playlists {
     items: [

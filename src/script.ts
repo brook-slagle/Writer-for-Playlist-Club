@@ -20,13 +20,21 @@ async function fetchProfile(code: string): Promise<UserProfile> {
     const result = await fetch("https://api.spotify.com/v1/me", {
         method: "GET", headers: { Authorization: `Bearer ${code}` }
     });
-    console.log(result)
+    console.log('fetchProfile: ', result)
     return await result.json();
 }
 
 async function fetchPlaylists(code: string): Promise<Playlists> {
     const result = await fetch("https://api.spotify.com/v1/me/playlists?limit=50", {
         method: "GET", headers:  { Authorization: `Bearer ${code}` }
+    });
+    console.log(result)
+    return await result.json(); 
+}
+
+async function fetchPlaylist(code: string, id: string): Promise<Playlist> {
+    const result = await fetch(`https://api.spotify.com/v1/playlists/${id}`, {
+        method: 'GET', headers: { Authorization: `Bearer ${code}`}
     });
     console.log(result)
     return await result.json();
@@ -40,16 +48,11 @@ async function fetchPlaylistTracks(code: string, id: string): Promise<PlaylistTr
     return await result.json();
 }
 
+
 function populateUI(profile: UserProfile) {
     document.getElementById("displayName")!.innerText = profile.display_name;
     document.getElementById("avatar")!.setAttribute("src", profile.images[0].url)
-    document.getElementById("id")!.innerText = profile.id;
     document.getElementById("email")!.innerText = profile.email;
-    document.getElementById("uri")!.innerText = profile.uri;
-    document.getElementById("uri")!.setAttribute("href", profile.external_urls.spotify);
-    document.getElementById("url")!.innerText = profile.href;
-    document.getElementById("url")!.setAttribute("href", profile.href);
-    document.getElementById("imgUrl")!.innerText = profile.images[0].url;
 }
 
 function populatePlaylists(accessToken: string, playlists: Playlists) {
@@ -67,20 +70,28 @@ function populatePlaylists(accessToken: string, playlists: Playlists) {
 
 async function populatePrintOut(accessToken: string, id: string) {
     console.log("populating...")
+    const playlistName: Playlist  = await fetchPlaylist(accessToken, id)
+    console.log(playlistName)
     const playlist: PlaylistTracks = await fetchPlaylistTracks(accessToken, id)
     console.log(playlist)
+
+    const header = document.createElement("h4")
+    header.innerHTML = `${playlistName.name}`
     const writeOut = document.getElementById('print-out')
-    writeOut?.appendChild(document.createElement('hr'))
+    writeOut?.appendChild(header)
+    let count = 1
 
     playlist.items.forEach(song => {
-        const songWrite = document.createElement('li')
+        const songWrite = document.createElement('p')
         const artistsArrObject = song.track.artists
         let artistsArr: string[] = []
         artistsArrObject.forEach(artist => {
             artistsArr = [...artistsArr, artist.name] 
         })
         const artists = artistsArr.join(", ")
-        songWrite.innerHTML = `${song.track.name} - ${artists}`
+        songWrite.innerHTML = `${count}. ${song.track.name} - ${artists}`
         writeOut?.appendChild(songWrite)
+        count+=1
     })
+    writeOut?.appendChild(document.createElement('hr'))
 }
