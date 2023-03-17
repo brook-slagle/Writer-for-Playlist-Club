@@ -52,14 +52,13 @@ async function fetchPlaylistTracks(code: string, id: string): Promise<PlaylistTr
 function populateUI(profile: UserProfile) {
     document.getElementById("displayName")!.innerText = profile.display_name;
     document.getElementById("avatar")!.setAttribute("src", profile.images[0].url)
-    document.getElementById("email")!.innerText = profile.email;
 }
 
 function populatePlaylists(accessToken: string, playlists: Playlists) {
     const list = document.getElementById("playlist-selector")
 
     playlists.items.forEach(playlist => {
-        if(playlist.name.includes("Week")) {
+        if(playlist.name.includes("Brook") || playlist.name.includes("Nick")) {
             const elemName = document.createElement('li');
             elemName.innerHTML = `<a href="#">${playlist.name}</a>`
             elemName.addEventListener('click', () => populatePrintOut(accessToken, playlist.id))
@@ -69,6 +68,14 @@ function populatePlaylists(accessToken: string, playlists: Playlists) {
 }
 
 async function populatePrintOut(accessToken: string, id: string) {
+    console.log("clearing anything in the writer...")
+    const elem = document.getElementById('header')
+    if (elem) {
+        elem.remove()
+    }
+    const writeOut = document.getElementById('print-out')
+    writeOut.innerHTML = ''
+
     console.log("populating...")
     const playlistName: Playlist  = await fetchPlaylist(accessToken, id)
     console.log(playlistName)
@@ -77,7 +84,7 @@ async function populatePrintOut(accessToken: string, id: string) {
 
     const header = document.createElement("h4")
     header.innerHTML = `${playlistName.name}`
-    const writeOut = document.getElementById('print-out')
+    header.setAttribute('id', 'header')
     writeOut?.appendChild(header)
     let count = 1
 
@@ -93,5 +100,4 @@ async function populatePrintOut(accessToken: string, id: string) {
         writeOut?.appendChild(songWrite)
         count+=1
     })
-    writeOut?.appendChild(document.createElement('hr'))
 }

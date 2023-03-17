@@ -3,33 +3,41 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Example</title>
+  <title>Writer</title>
   <script src="src/script.ts" type="module"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Rubik:wght@900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" >
-  <style>
-
-  </style>
+  
 </head>
 
 <body>
-  <h1>Display your Spotify Profile Data</h1>
-
-  <section id="profile">
-    <h2>Logged in as <span id="displayName"></span></h2>
-    <img id="avatar" width="200" src="#" />
-    <ul>
-      <li>Email: <span id="email"></span></li>
-    </ul>
-
-    <h3>Click a playlist... Playlists:</h3>
-    <ul id='playlist-selector'>
-    </ul>
-
-    <h3>Playlist Write Out</h3>
-    <div contenteditable="true" id="print-out">
+  <div class="content">
+    <div class="block-title">
+      <h1 class="title">Writer for PLAYLIST CLUB.</h1>
+      
+      <section id="profile">
+        <img id="avatar" width="200" src="#" />
+        <h2>Welcome <span class="display-name" id="displayName"></span></h2>
+      </section>
     </div>
-  </section>
+      
+    <div class="Writer">
+      <div class="block-playlists">
+        <h3 class="playlist-header">PLAYLISTS.</h3>
+        <ul class="playlists" id='playlist-selector'>
 
+        </ul>
+      </div>
+      
+      <div class="block-writer">  
+        <h3 class="write-header">Write.</h3>
+        <div class="write" contenteditable="true" id="print-out">
+      </div>
+      </div>
+    </div>  
+  </div>
 </body>
 
 </html>

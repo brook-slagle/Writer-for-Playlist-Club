@@ -1,9 +1,67 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: black;
     color: white;
+    font-family: 'Inter', sans-serif;
 }
 
-li {
+.content {
+    max-width: 1050px;
+    margin: auto;
+}
+
+.block-title {
+    display: flex;
+    text-align: center;
+    margin: 50px 0px;
+}
+
+.display-name {
+    color: red;
+}
+
+#avatar {
+    border-radius: 15px;
+}
+
+.title {
+    font-family: 'Rubik', sans-serif;
+    font-size: 100px;
+    width: 900px;
+    text-align: left;
+    margin: 0px;;
+}
+
+.Writer {
+    display: flex;
+    columns: 2;
+}
+
+.Writer > div > h3 {
+    font-family: 'Rubik', sans-serif;
+    font-size: 50px;
+}
+
+.block-playlists {
+    margin: 60px;
+}
+
+.playlist-header {
+    margin: 0;
+}
+
+.block-writer {
+    margin: 60px;
+}
+.write-header {
+    margin: 0;
+}
+
+/* .block-writer > li {
     display: list-item;
     list-style-position: inside;
-}   
+}    */
