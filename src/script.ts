@@ -5,15 +5,19 @@ import { redirectToAuthCodeFlow, getAccessToken } from "./authCodeWithPkce";
 const clientId = "9eb8b4498bcd4fccbd1ce70c4aab735d";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
+main()
 
-if (!code) {
-    redirectToAuthCodeFlow(clientId);
-} else {
-    const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
-    const playlists = await fetchPlaylists(accessToken)
-    populateUI(profile);
-    populatePlaylists(accessToken, playlists)
+
+async function main() {
+    if (!code) {
+        redirectToAuthCodeFlow(clientId);
+    } else {
+        const accessToken = await getAccessToken(clientId, code);
+        const profile = await fetchProfile(accessToken);
+        const playlists = await fetchPlaylists(accessToken)
+        populateUI(profile);
+        populatePlaylists(accessToken, playlists)
+    } 
 }
 
 async function fetchProfile(code: string): Promise<UserProfile> {
