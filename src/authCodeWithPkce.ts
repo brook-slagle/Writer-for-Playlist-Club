@@ -1,3 +1,7 @@
+function test () {
+    console.log('after waiting..')
+}
+
 export async function redirectToAuthCodeFlow(clientId: string) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
@@ -13,12 +17,11 @@ export async function redirectToAuthCodeFlow(clientId: string) {
     params.append("code_challenge", challenge);
 
     console.log('rediretoauth', params)
+    setTimeout(test, 100000)
     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
 
-function test () {
-    console.log('after waiting..')
-}
+
 
 export async function getAccessToken(clientId: string, code: string) {
     const verifier = localStorage.getItem("verifier");
