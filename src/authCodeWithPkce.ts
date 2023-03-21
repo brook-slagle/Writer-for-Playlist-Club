@@ -16,6 +16,10 @@ export async function redirectToAuthCodeFlow(clientId: string) {
     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
 
+function test () {
+    console.log('after waiting..')
+}
+
 export async function getAccessToken(clientId: string, code: string) {
     const verifier = localStorage.getItem("verifier");
 
@@ -27,6 +31,7 @@ export async function getAccessToken(clientId: string, code: string) {
     params.append("code_verifier", verifier!);
 
     console.log('getaccesstoken', params)
+    setTimeout(test, 100000)
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
