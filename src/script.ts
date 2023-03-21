@@ -56,6 +56,7 @@ function populateUI(profile: UserProfile) {
 
 function populatePlaylists(accessToken: string, playlists: Playlists) {
     const list = document.getElementById("playlist-selector")
+    console.log(playlists)
 
     playlists.items.forEach(playlist => {
         if(playlist.name.includes("Brook") || playlist.name.includes("Nick")) {
@@ -73,31 +74,34 @@ async function populatePrintOut(accessToken: string, id: string) {
     if (elem) {
         elem.remove()
     }
-    const writeOut = document.getElementById('print-out')
-    writeOut.innerHTML = ''
-
-    console.log("populating...")
-    const playlistName: Playlist  = await fetchPlaylist(accessToken, id)
-    console.log(playlistName)
-    const playlist: PlaylistTracks = await fetchPlaylistTracks(accessToken, id)
-    console.log(playlist)
-
-    const header = document.createElement("h4")
-    header.innerHTML = `${playlistName.name}`
-    header.setAttribute('id', 'header')
-    writeOut?.appendChild(header)
-    let count = 1
-
-    playlist.items.forEach(song => {
-        const songWrite = document.createElement('p')
-        const artistsArrObject = song.track.artists
-        let artistsArr: string[] = []
-        artistsArrObject.forEach(artist => {
-            artistsArr = [...artistsArr, artist.name] 
+    const writeOut: HTMLElement | null = document.getElementById('print-out')
+    if (writeOut) {
+        writeOut.innerHTML = ''
+    
+        console.log("populating...")
+        const playlistName: Playlist  = await fetchPlaylist(accessToken, id)
+        console.log(playlistName)
+        const playlist: PlaylistTracks = await fetchPlaylistTracks(accessToken, id)
+        console.log(playlist)
+    
+        const header = document.createElement("h4")
+        header.innerHTML = `${playlistName.name}`
+        header.setAttribute('id', 'header')
+        writeOut?.appendChild(header)
+        let count = 1
+    
+        playlist.items.forEach(song => {
+            const songWrite = document.createElement('p')
+            const artistsArrObject: any[] = song.track.artists
+            console.log('artist obj: ',artistsArrObject)
+            let artistsArr: string[] = []
+            artistsArrObject.forEach((artist: Artist) => {
+                artistsArr = artistsArr.concat(artist.name) 
+            })
+            const artists = artistsArr.join(", ")
+            songWrite.innerHTML = `${count}. ${song.track.name} - ${artists}`
+            writeOut?.appendChild(songWrite)
+            count+=1
         })
-        const artists = artistsArr.join(", ")
-        songWrite.innerHTML = `${count}. ${song.track.name} - ${artists}`
-        writeOut?.appendChild(songWrite)
-        count+=1
-    })
+    }
 }

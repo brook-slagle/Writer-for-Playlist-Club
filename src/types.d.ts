@@ -26,25 +26,32 @@ interface Playlist {
     name: string;
 }
 
+interface PlaylistItem {
+    name: string;
+    href: string;
+    id: string;
+    tracks: {
+      total: number;
+    };
+}
+
 interface Playlists {
-    items: [
-        { name: string },
-        { href: string },
-        { id: string },
-        { tracks: [
-            { total: integer }
-        ]}
-    ]
+    items: PlaylistItem[];
 }
 
+interface Artist {
+    name: string; 
+}    
+
+interface PlaylistTrackItems {
+    track: {
+        name: string,
+        artists: [
+            { name: string }
+        ]
+    } 
+}
+    
 interface PlaylistTracks {
-    items: [
-        { track: [
-            { name: string },
-            { artists: [
-            ]}
-        ]}
-    ]
+    items: PlaylistTrackItems[];
 }
-
-

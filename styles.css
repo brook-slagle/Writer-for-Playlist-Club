@@ -20,6 +20,11 @@ body {
     margin: 50px 0px;
 }
 
+.a-title{ 
+    color: white;
+    text-decoration: none;
+}
+
 .display-name {
     color: red;
 }
