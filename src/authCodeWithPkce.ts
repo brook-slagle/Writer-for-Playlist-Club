@@ -12,6 +12,7 @@ export async function redirectToAuthCodeFlow(clientId: string) {
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
 
+    console.log('rediretoauth', params)
     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
 
@@ -24,6 +25,8 @@ export async function getAccessToken(clientId: string, code: string) {
     params.append("code", code);
     params.append("redirect_uri", "https://writer-for-playlist-club.netlify.app/callback");
     params.append("code_verifier", verifier!);
+
+    console.log('getaccesstoken', params)
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
