@@ -16,7 +16,19 @@ async function main() {
         const profile = await fetchProfile(accessToken);
         const playlists = await fetchPlaylists(accessToken)
         populateUI(profile);
-        populatePlaylists(accessToken, playlists)
+
+        // doing list things
+        const list = document.getElementById("playlist-selector")!
+        const searchInput = document.getElementById("searchInput") as HTMLInputElement;
+        const searchTerm = searchInput.value;
+        populatePlaylists(accessToken, playlists, searchTerm, list)
+
+        searchInput.addEventListener("input", () => {
+            const searchTerm = searchInput.value;
+            populatePlaylists(accessToken, playlists, searchTerm, list)
+        })
+
+
     } 
 }
 
@@ -58,18 +70,34 @@ function populateUI(profile: UserProfile) {
     document.getElementById("avatar")!.setAttribute("src", profile.images[0].url)
 }
 
-function populatePlaylists(accessToken: string, playlists: Playlists) {
-    const list = document.getElementById("playlist-selector")
-    console.log(playlists)
 
+function populatePlaylists(accessToken: string, playlists: Playlists, searchTerm: string, list: HTMLElement) {
+    list.innerHTML = "";
+    
     playlists.items.forEach(playlist => {
-        if(playlist.name.includes("Brook") || playlist.name.includes("Nick")) {
+        if (searchTerm == "") {
             const elemName = document.createElement('li');
-            elemName.innerHTML = `<a href="#">${playlist.name}</a>`
+            elemName.innerHTML = `<a href="#" class="playlist">${playlist.name}</a>`
+            elemName.addEventListener('click', () => populatePrintOut(accessToken, playlist.id))
+            list?.appendChild(elemName)
+        }
+        else if(playlist.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+            const elemName = document.createElement('li');
+            elemName.innerHTML = `<a href="#" class="playlist">${playlist.name}</a>`
             elemName.addEventListener('click', () => populatePrintOut(accessToken, playlist.id))
             list?.appendChild(elemName)
         }
     });
+
+
+    // playlists.items.forEach(playlist => {
+    //     if(playlist.name.includes("Brook") || playlist.name.includes("Nick")) {
+    //         const elemName = document.createElement('li');
+    //         elemName.innerHTML = `<a href="#">${playlist.name}</a>`
+    //         elemName.addEventListener('click', () => populatePrintOut(accessToken, playlist.id))
+    //         list?.appendChild(elemName)
+    //     }
+    // });
 }
 
 async function populatePrintOut(accessToken: string, id: string) {
