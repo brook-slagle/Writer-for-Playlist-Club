@@ -6,7 +6,7 @@
   </a>
 </p>
 
-> Writer for Playlist Club.Web application that returns a copy-able and edit-able write-out of a selected Spotify Playlist. Utilizing TypeScript, querying the Spotify API via OAuth authorization. Due to how spotify's developer apps work, if you want to use this app, you
+> Writer for Playlist Club.Web application that returns a copy-able and edit-able write-out of a selected Spotify Playlist. Utilizing TypeScript, querying the Spotify API via OAuth authorization. Even though this is available to use on the internet, due to how spotify's API works, I would have to add everyone who wanted to use the app's email to my list of approved users. See "Usage" to run locally. 
 
 ### ✨ [Demo](https://writer-for-playlist-club.netlify.app)
 ![gif](https://i.imgur.com/besJSIp.gif)
@@ -22,12 +22,18 @@ npm install
 ```sh
 npm run dev
 ```
+To run this app locally with your own spotify developer app, you will have to:
+1. Log in with your spotify account at https://developer.spotify.com/dashboard/login and create an app through the dashboard. 
+2. Add your localhost callback to your application in spotify developer dashboard and replace the client_id in `src/authCodeWithPkce.ts`. 
+3. `npm run dev`
+4. share all of your playlists with friends on apple music. 
+
 
 ## Author
 
 👤 **Brook Slagle**
 
-* Website: brookslagle.com
+* Website: https://brookslagle.com
 * Twitter: [@punkthebucket](https://twitter.com/punkthebucket)
 * Github: [@brook-slagle](https://github.com/brook-slagle)
 * LinkedIn: [@brook-slagle](https://linkedin.com/in/brook-slagle)
