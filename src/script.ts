@@ -17,16 +17,16 @@ async function main() {
         const playlists = await fetchPlaylists(accessToken)
         populateUI(profile);
 
-        // doing list things
+        // playlists
         const list = document.getElementById("playlist-selector")!
         const searchInput = document.getElementById("searchInput") as HTMLInputElement;
         const searchTerm = searchInput.value;
-        populatePlaylists(accessToken, playlists, searchTerm, list)
+        populatePlaylists(accessToken, playlists, searchTerm, list) // inital populate
 
         searchInput.addEventListener("input", () => {
             const searchTerm = searchInput.value;
             populatePlaylists(accessToken, playlists, searchTerm, list)
-        })
+        }) // event listener to populate when the search bar receives input
 
 
     } 
